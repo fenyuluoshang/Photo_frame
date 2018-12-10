@@ -21,7 +21,7 @@
           :high="true"
           :fixedBox="true"
           :fixedNumber="fixedNumber"
-          :original="true"
+          :original="false"
           id="cropper"
           :info="false"
           @realTime="realTime"
@@ -78,7 +78,7 @@
   </el-container>
 </template>
 <script>
-import vueCropper from "./vue-cropper/vue-cropper";
+import vueCropper from "vue-cropper";
 export default {
   components: {
     vueCropper
@@ -286,6 +286,7 @@ export default {
         }
       };
       reader.readAsArrayBuffer(file);
+      this.option.img = require("./1.jpg");
     }
   },
   components: {
