@@ -10,7 +10,7 @@
   <el-main>
   <el-button type="warning" round @click="link">制作大东软新年贺卡</el-button>
   </el-main>
-  <div id="footer">策划: 品牌发展部&nbsp 研发:微光网络工作室</div>
+  <div id="footer">策划: 品牌发展部&nbsp; 研发:微光网络工作室</div>
 </el-container>
 </template>
 <script>

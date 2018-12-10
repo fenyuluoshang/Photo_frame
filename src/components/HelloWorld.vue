@@ -1,59 +1,88 @@
 <template>
-<el-container>
-  <el-main>
-	  <div id="reust" :class="{hold:ishold}">
-		  <img :src = "zbase64[0]"  :style="{width: lastwidth+'px',height: lastheight+'px',}" id="zpy" >
-      <img src="./imaaa.png"  id="resut">
-	  </div>
-    <div id="bertishi" :class="{hold:tishi}">
-      <div class="tishi" @click="yincang">
-      
+  <el-container>
+    <el-main>
+      <div id="reust" :class="{hold:ishold}">
+        <img :src="zbase64[0]" :style="{width: lastwidth+'px',height: lastheight+'px',}" id="zpy">
+        <img src="./imaaa.png" id="resut">
       </div>
-    </div>
-	   <div id="sss" ref="container" :style="{width: lastwidth+'px',height: lastheight+'px'}">
-	   <vueCropper
-     ref="cropper"
-     :img="option.img"
-     :full="option.full"
-  :outputSize="option.size"
-  :outputType="option.outputType"
-  :autoCrop="true"
-  :autoCropWidth="maxWidth"
-  :autoCropHeight="maxHeight"
-  :high="true"
-  :fixedBox = "true"
-  :fixedNumber = "fixedNumber"
-  :original = "true"
-  id="cropper"
-  :info="false"
-  @realTime="realTime"
-  ></vueCropper>
-<img :src="option.bg" :style="{width: lastwidth+'px',height: lastheight+'px',}" id = "imgbg">
-</div>
+      <div id="bertishi" :class="{hold:tishi}">
+        <div class="tishi" @click="yincang"></div>
+      </div>
+      <div id="sss" ref="container" :style="{width: lastwidth+'px',height: lastheight+'px'}">
+        <vueCropper
+          ref="cropper"
+          :img="option.img"
+          :full="option.full"
+          :outputSize="option.size"
+          :outputType="option.outputType"
+          :autoCrop="true"
+          :autoCropWidth="maxWidth"
+          :autoCropHeight="maxHeight"
+          :high="true"
+          :fixedBox="true"
+          :fixedNumber="fixedNumber"
+          :original="true"
+          id="cropper"
+          :info="false"
+          @realTime="realTime"
+        ></vueCropper>
+        <img :src="option.bg" :style="{width: lastwidth+'px',height: lastheight+'px',}" id="imgbg">
+      </div>
+    </el-main>
 
-</el-main>
+    <el-footer>
+      <el-row :gutter="20" id="imgbarr">
+        <el-col :span="6">
+          <div>
+            <div class="fugai" @click="changBG(1)">&nbsp;</div>
+            <img src="./bg1.png" class="showbar">
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div>
+            <div class="fugai" @click="changBG(2)">&nbsp;</div>
+            <img src="./bg2.png" class="showbar">
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div>
+            <div class="fugai" @click="changBG(3)">&nbsp;</div>
+            <img src="./bg3.png" class="showbar">
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div>
+            <div class="fugai" @click="changBG(4)">&nbsp;</div>
+            <img src="./bg4.png" class="showbar">
+          </div>
+        </el-col>
+      </el-row>
 
-  <el-footer>
-	  <el-row :gutter="20" id="imgbarr">
-  <el-col :span="6"  ><div ><div class="fugai" @click="changBG(1)">&nbsp;</div> <img src="./bg1.png" class="showbar" > </div></el-col>
-  <el-col :span="6"  ><div><div class="fugai" @click="changBG(2)">&nbsp;</div> <img src="./bg2.png" class="showbar" > </div></el-col>
-  <el-col :span="6"  ><div ><div class="fugai" @click="changBG(3)">&nbsp;</div> <img src="./bg3.png" class="showbar" > </div></el-col>
-  <el-col :span="6"  ><div ><div class="fugai" @click="changBG(4)">&nbsp;</div> <img src="./bg4.png" class="showbar" ></div></el-col>
-</el-row>
-
-	  <el-row type="flex" class="row-bg" justify="space-around">
-  <el-col :span="12">  <label class="el-button" for="uploads">选择图片</label>
-	<input type="file" id="uploads" style="position:absolute; clip:rect(0 0 0 0);"
-	 accept="image/png, image/jpeg, image/gif, image/jpg" @change="uploadImg" ref="uploadbtn"></el-col>
-  <el-col :span="12"><el-button  @click="finish()">生成贺卡</el-button></el-col>
-</el-row>
-
-	</el-footer>
-</el-container>
+      <el-row type="flex" class="row-bg" justify="space-around">
+        <el-col :span="12">
+          <label class="el-button" for="uploads">选择图片</label>
+          <input
+            type="file"
+            id="uploads"
+            style="position:absolute; clip:rect(0 0 0 0);"
+            accept="image/png, image/jpeg, image/gif, image/jpg"
+            @change="uploadImg"
+            ref="uploadbtn"
+          >
+        </el-col>
+        <el-col :span="12">
+          <el-button @click="finish()">生成贺卡</el-button>
+        </el-col>
+      </el-row>
+    </el-footer>
+  </el-container>
 </template>
 <script>
-import vueCropper from "vue-cropper";
+import vueCropper from "./vue-cropper/vue-cropper";
 export default {
+  components: {
+    vueCropper
+  },
   data: function() {
     return {
       type: 1,
@@ -233,9 +262,9 @@ export default {
     uploadImg(e, num) {
       //上传图片
       // this.option.img
-   
+
       var file = e.target.files[0];
-         console.log(file);
+      console.log(file);
       if (!/\.(gif|jpg|jpeg|png|bmp|JPG|PNG)$/.test(e.target.value)) {
         alert("图片类型必须是.gif,jpeg,jpg,png,bmp中的一种");
         return false;
@@ -265,7 +294,7 @@ export default {
   created() {
     var fullwidth = document.body.clientWidth;
     this.lastwidth = fullwidth * 0.8;
-    this.lastheight = this.lastwidth / 6 * 9;
+    this.lastheight = (this.lastwidth / 6) * 9;
     // console.log(this.lastwidth, this.lastheight);
 
     // var config = {
