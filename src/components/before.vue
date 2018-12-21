@@ -39,23 +39,23 @@ export default {
     padding: 20px;
   }
   .el-carousel__item:nth-child(1) {
-    background:url(./2018/show/01.png) no-repeat;
+    background:url(./2018/show/01.jpg) no-repeat;
     background-position: center center;
     background-size: auto 100%;
   }
   
   .el-carousel__item:nth-child(2) {
-   background:url(./2018/show/04.png) no-repeat;
+   background:url(./2018/show/02.jpg) no-repeat;
     background-position: center center;
     background-size: auto 100%;
   }
   .el-carousel__item:nth-child(3) {
-    background:url(./2018/show/02.png) no-repeat;
+    background:url(./2018/show/03.jpg) no-repeat;
     background-position: center center;
     background-size: auto 100%;
   }
   .el-carousel__item:nth-child(4) {
-   background:url(./2018/show/03.png) no-repeat;
+   background:url(./2018/show/04.jpg) no-repeat;
     background-position: center center;
     background-size: auto 100%;
   }

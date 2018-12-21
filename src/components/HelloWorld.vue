@@ -35,32 +35,32 @@
         <el-col :span="6">
           <div>
             <div class="fugai" @click="changBG(1)">&nbsp;</div>
-            <img src="./2018/01.png" class="showbar">
+            <img src="./2018/1.png" class="showbar">
           </div>
         </el-col>
         <el-col :span="6">
           <div>
             <div class="fugai" @click="changBG(2)">&nbsp;</div>
-            <img src="./2018/02.png" class="showbar">
+            <img src="./2018/2.png" class="showbar">
           </div>
         </el-col>
         <el-col :span="6">
           <div>
             <div class="fugai" @click="changBG(3)">&nbsp;</div>
-            <img src="./2018/03.png" class="showbar">
+            <img src="./2018/3.png" class="showbar">
           </div>
         </el-col>
         <el-col :span="6">
           <div>
             <div class="fugai" @click="changBG(4)">&nbsp;</div>
-            <img src="./2018/04.png" class="showbar">
+            <img src="./2018/4.png" class="showbar">
           </div>
         </el-col>
       </el-row>
 
       <el-row type="flex" class="row-bg" justify="space-around">
         <el-col :style="{display:iswechat?'none':''}" :span="12">
-          <label class="el-button" for="uploads">选择图片</label>
+          <label class="el-button el-button--primary" for="uploads">选择图片</label>
           <input
             type="file"
             id="uploads"
@@ -71,10 +71,10 @@
           >
         </el-col>
         <el-col :style="{display:!iswechat?'none':''}" :span="12">
-          <el-button @click="uploadImg(null,0)">选择图片</el-button>
+          <el-button type="primary" @click="uploadImg(null,0)">选择图片</el-button>
         </el-col>
         <el-col :span="12">
-          <el-button @click="finish()" v-loading.fullscreen.lock="fullscreenLoading" >生成贺卡</el-button>
+          <el-button type="primary" @click="finish()" v-loading.fullscreen.lock="fullscreenLoading" >生成贺卡</el-button>
         </el-col>
       </el-row>
     </el-footer>
@@ -109,7 +109,7 @@ export default {
         size: 1,
         outputType: "jpg",
         img: "",
-        bg: require("./2018/01.png"),
+        bg: require("./2018/1.png"),
         full: true
       }
     };
@@ -148,16 +148,16 @@ export default {
       console.log(type);
       switch (type) {
         case 1:
-          this.option.bg = require("./2018/01.png");
+          this.option.bg = require("./2018/1.png");
           break;
         case 2:
-          this.option.bg = require("./2018/02.png");
+          this.option.bg = require("./2018/2.png");
           break;
         case 3:
-          this.option.bg = require("./2018/03.png");
+          this.option.bg = require("./2018/3.png");
           break;
         case 4:
-          this.option.bg = require("./2018/04.png");
+          this.option.bg = require("./2018/4.png");
           break;
       }
       console.log(this.type);
@@ -188,7 +188,7 @@ export default {
               console.log("绘制内容");
               ctx.drawImage(img, 0, 0, c.width, c.height);
               var img2 = new Image();
-              img2.src = require("./2018/01.png");
+              img2.src = require("./2018/1.png");
               img2.onload = function () {
                 console.log("绘制背景");
                 ctx.drawImage(img2, 0, 0, c.width, c.height);
@@ -204,7 +204,7 @@ export default {
               console.log("绘制内容");
               ctx.drawImage(img, 0, 0, c.width, c.height);
               var img2 = new Image();
-              img2.src = require("./2018/02.png");
+              img2.src = require("./2018/2.png");
               img2.onload = function () {
                 console.log("绘制背景");
                 ctx.drawImage(img2, 0, 0, c.width, c.height);
@@ -220,7 +220,7 @@ export default {
               console.log("绘制内容");
               ctx.drawImage(img, 0, 0, c.width, c.height);
               var img2 = new Image();
-              img2.src = require("./2018/03.png");
+              img2.src = require("./2018/3.png");
               img2.onload = function () {
                 console.log("绘制背景");
                 ctx.drawImage(img2, 0, 0, c.width, c.height);
@@ -236,7 +236,7 @@ export default {
               console.log("绘制内容");
               ctx.drawImage(img, 0, 0, c.width, c.height);
               var img2 = new Image();
-              img2.src = require("./2018/04.png");
+              img2.src = require("./2018/4.png");
               img2.onload = function () {
                 console.log("绘制背景");
                 ctx.drawImage(img2, 0, 0, c.width, c.height);
@@ -306,7 +306,7 @@ export default {
         // if (this.wxready == 1)
         wx.chooseImage({
           count: 1, // 默认9
-          sizeType: ['original'], // 可以指定是原图还是压缩图，默认二者都有
+          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: function (res) {
             console.log(res)
