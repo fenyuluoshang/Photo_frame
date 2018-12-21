@@ -35,31 +35,31 @@
         <el-col :span="6">
           <div>
             <div class="fugai" @click="changBG(1)">&nbsp;</div>
-            <img src="./bg1.png" class="showbar">
+            <img src="./2018/01.png" class="showbar">
           </div>
         </el-col>
         <el-col :span="6">
           <div>
             <div class="fugai" @click="changBG(2)">&nbsp;</div>
-            <img src="./bg2.png" class="showbar">
+            <img src="./2018/02.png" class="showbar">
           </div>
         </el-col>
         <el-col :span="6">
           <div>
             <div class="fugai" @click="changBG(3)">&nbsp;</div>
-            <img src="./bg3.png" class="showbar">
+            <img src="./2018/03.png" class="showbar">
           </div>
         </el-col>
         <el-col :span="6">
           <div>
             <div class="fugai" @click="changBG(4)">&nbsp;</div>
-            <img src="./bg4.png" class="showbar">
+            <img src="./2018/04.png" class="showbar">
           </div>
         </el-col>
       </el-row>
 
       <el-row type="flex" class="row-bg" justify="space-around">
-        <el-col :span="12">
+        <el-col :style="{display:iswechat?'none':''}" :span="12">
           <label class="el-button" for="uploads">选择图片</label>
           <input
             type="file"
@@ -70,6 +70,9 @@
             ref="uploadbtn"
           >
         </el-col>
+        <el-col :style="{display:!iswechat?'none':''}" :span="12">
+          <el-button @click="uploadImg(null,0)">选择图片</el-button>
+        </el-col>
         <el-col :span="12">
           <el-button @click="finish()">生成贺卡</el-button>
         </el-col>
@@ -79,12 +82,15 @@
 </template>
 <script>
 import vueCropper from "vue-cropper";
+import { setTimeout } from 'timers';
 export default {
   components: {
     vueCropper
   },
-  data: function() {
+  data: function () {
     return {
+      iswechat: false,
+      wxready: 0,
       type: 1,
       ishold: true,
       c: [],
@@ -101,8 +107,8 @@ export default {
       option: {
         size: 1,
         outputType: "jpg",
-        img: require("./img.jpg"),
-        bg: require("./bg1.png"),
+        img: "",
+        bg: require("./2018/01.png"),
         full: true
       }
     };
@@ -111,7 +117,9 @@ export default {
     yincang() {
       this.tishi = true;
       console.log("ssss");
-      this.$refs.uploadbtn.click();
+      // if (this.wxready === 1)
+      // this.uploadImg(none)
+      // this.$refs.uploadbtn.click();
     },
     changeImg() {
       this.option.img = this.lists[~~(Math.random() * this.lists.length)].img;
@@ -139,22 +147,26 @@ export default {
       console.log(type);
       switch (type) {
         case 1:
-          this.option.bg = require("./bg1.png");
+          this.option.bg = require("./2018/01.png");
           break;
         case 2:
-          this.option.bg = require("./bg2.png");
+          this.option.bg = require("./2018/04.png");
           break;
         case 3:
-          this.option.bg = require("./bg3.png");
+          this.option.bg = require("./2018/02.png");
           break;
         case 4:
-          this.option.bg = require("./bg4.png");
+          this.option.bg = require("./2018/03.png");
           break;
       }
       console.log(this.type);
     },
     finish() {
       // 输出
+      this.$message({
+        message: '开始制作，请稍等',
+        type: 'success'
+      })
       this.ishold = false;
       var sdsssd = [];
       this.$refs.cropper.getCropBlob(data => {
@@ -173,12 +185,12 @@ export default {
         var type = this.type;
         switch (type) {
           case 1:
-            img.onload = function() {
+            img.onload = function () {
               console.log("绘制内容");
               ctx.drawImage(img, 0, 0, c.width, c.height);
               var img2 = new Image();
-              img2.src = require("./bg1.png");
-              img2.onload = function() {
+              img2.src = require("./2018/01.png");
+              img2.onload = function () {
                 console.log("绘制背景");
                 ctx.drawImage(img2, 0, 0, c.width, c.height);
                 console.log("填充数组");
@@ -189,12 +201,12 @@ export default {
             };
             break;
           case 2:
-            img.onload = function() {
+            img.onload = function () {
               console.log("绘制内容");
               ctx.drawImage(img, 0, 0, c.width, c.height);
               var img2 = new Image();
-              img2.src = require("./bg2.png");
-              img2.onload = function() {
+              img2.src = require("./2018/02.png");
+              img2.onload = function () {
                 console.log("绘制背景");
                 ctx.drawImage(img2, 0, 0, c.width, c.height);
                 console.log("填充数组");
@@ -205,12 +217,12 @@ export default {
             };
             break;
           case 3:
-            img.onload = function() {
+            img.onload = function () {
               console.log("绘制内容");
               ctx.drawImage(img, 0, 0, c.width, c.height);
               var img2 = new Image();
-              img2.src = require("./bg3.png");
-              img2.onload = function() {
+              img2.src = require("./2018/03.png");
+              img2.onload = function () {
                 console.log("绘制背景");
                 ctx.drawImage(img2, 0, 0, c.width, c.height);
                 console.log("填充数组");
@@ -221,12 +233,12 @@ export default {
             };
             break;
           case 4:
-            img.onload = function() {
+            img.onload = function () {
               console.log("绘制内容");
               ctx.drawImage(img, 0, 0, c.width, c.height);
               var img2 = new Image();
-              img2.src = require("./bg4.png");
-              img2.onload = function() {
+              img2.src = require("./2018/04.png");
+              img2.onload = function () {
                 console.log("绘制背景");
                 ctx.drawImage(img2, 0, 0, c.width, c.height);
                 console.log("填充数组");
@@ -261,33 +273,60 @@ export default {
     },
     uploadImg(e, num) {
       //上传图片
-      // this.option.img
-
-      var file = e.target.files[0];
-      console.log(file);
-      if (!/\.(gif|jpg|jpeg|png|bmp|JPG|PNG)$/.test(e.target.value)) {
-        alert("图片类型必须是.gif,jpeg,jpg,png,bmp中的一种");
-        return false;
+      if (!this.iswechat) {
+        var file = e.target.files[0];
+        console.log(file);
+        if (!/\.(gif|jpg|jpeg|png|bmp|JPG|PNG)$/.test(e.target.value)) {
+          alert("图片类型必须是.gif,jpeg,jpg,png,bmp中的一种");
+          return false;
+        }
+        var reader = new FileReader();
+        reader.onload = e => {
+          let data;
+          if (typeof e.target.result === "object") {
+            // 把Array Buffer转化为blob 如果是base64不需要
+            data = window.URL.createObjectURL(new Blob([e.target.result]));
+          } else {
+            data = e.target.result;
+          }
+          num = 1;
+          // console.log(num)
+          if (num === 1) {
+            this.option.img = data;
+            console.log(data);
+          }
+        };
+        reader.readAsArrayBuffer(file);
       }
-      var reader = new FileReader();
-      reader.onload = e => {
-        let data;
-        if (typeof e.target.result === "object") {
-          // 把Array Buffer转化为blob 如果是base64不需要
-          data = window.URL.createObjectURL(new Blob([e.target.result]));
-        } else {
-          data = e.target.result;
-        }
-        num = 1;
-        // console.log(num)
-        if (num === 1) {
-          this.option.img = data;
-          console.log(data);
-        }
-      };
-      reader.readAsArrayBuffer(file);
-      this.option.img = require("./1.jpg");
-    }
+      else {
+        let _this = this;
+        // if (this.wxready == 1)
+        wx.chooseImage({
+          count: 1, // 默认9
+          sizeType: ['original'], // 可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          success: function (res) {
+            console.log(res)
+            wx.uploadImage({
+              localId: res.localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+              isShowProgressTips: 1, // 默认为1，显示进度提示
+              success: function (res) {
+                // _this.$message(res.serverId)
+                _this.$message({
+                  message: '正在加载',
+                  type: 'success'
+                })
+                _this.option.img = "https://shimmer.neusoft.edu.cn/wechat/web/api/media?media_id=" + res.serverId
+              }
+            });
+          }
+        })
+        // else
+        //   this.$message({
+        //     message: '微信客户端还没准备好',
+        //     type: 'warning'
+        //   })
+      }    }
   },
   components: {
     vueCropper
@@ -296,25 +335,29 @@ export default {
     var fullwidth = document.body.clientWidth;
     this.lastwidth = fullwidth * 0.8;
     this.lastheight = (this.lastwidth / 6) * 9;
-    // console.log(this.lastwidth, this.lastheight);
-
-    // var config = {
-    //   appId: "", // 必填，公众号的唯一标识
-    //   timestamp: "", // 必填，生成签名的时间戳
-    //   nonceStr: "", // 必填，生成签名的随机串
-    //   signature: "", // 必填，签名，见附录1
-    //   jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-    // };
-
-    // //  this.$axios({
-    // //     method: 'get',
-    // //     url: '/wechat/api/wechat/jssdk_config',
-    // //     data: {
-    // //       "url": window.location.href
-    // //     },
-    // //       headers: {  'Content-Type': 'application/x-www-form-urlencoded'}
-    // //   })
-
+    let _this = this;
+    // this.$axios({
+    //   method: 'get',
+    //   url: "https://shimmer.neusoft.edu.cn/wechat/web/api/init?url=" + encodeURIComponent(location.href.split("#")[0])
+    // }).then(function (res) {
+    //   wx.config({
+    //     debug: false,
+    //     appId: res.data.appid, // 必填，公众号的唯一标识
+    //     timestamp: res.data.timestamp, // 必填，生成签名的时间戳
+    //     nonceStr: res.data.noncestr, // 必填，生成签名的随机串
+    //     signature: res.data.signature, // 必填，签名，见附录1
+    //     jsApiList: ["scanQRCode", "chooseImage", "uploadImage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    //   });
+    var ua = window.navigator.userAgent.toLowerCase();
+    //通过正则表达式匹配ua中是否含有MicroMessenger字符串
+    if (ua.match(/MicroMessenger/i) == 'micromessenger')
+      this.iswechat = true;
+    if (this.wechat)
+      wx.ready(() => {
+        _this.wxready = 1
+        _this.uploadImg(null, 0)
+      })
+    // })
     // let _this = this;
     // this.$axios
     //   .get("wechat_jssdk.php?" + window.location.href.split("#")[0])
@@ -359,7 +402,7 @@ export default {
     // console.log(wx);
     // // wx.chooseImage();
   },
-  mounted() {}
+  mounted() { }
 };
 </script>
 <style scoped>
