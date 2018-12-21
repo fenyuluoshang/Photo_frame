@@ -74,7 +74,7 @@
           <el-button @click="uploadImg(null,0)">选择图片</el-button>
         </el-col>
         <el-col :span="12">
-          <el-button @click="finish()">生成贺卡</el-button>
+          <el-button @click="finish()" v-loading.fullscreen.lock="fullscreenLoading" >生成贺卡</el-button>
         </el-col>
       </el-row>
     </el-footer>
@@ -89,6 +89,7 @@ export default {
   },
   data: function () {
     return {
+      fullscreenLoading:false,
       iswechat: false,
       wxready: 0,
       type: 1,
@@ -150,23 +151,21 @@ export default {
           this.option.bg = require("./2018/01.png");
           break;
         case 2:
-          this.option.bg = require("./2018/04.png");
-          break;
-        case 3:
           this.option.bg = require("./2018/02.png");
           break;
-        case 4:
+        case 3:
           this.option.bg = require("./2018/03.png");
+          break;
+        case 4:
+          this.option.bg = require("./2018/04.png");
           break;
       }
       console.log(this.type);
     },
     finish() {
       // 输出
-      this.$message({
-        message: '开始制作，请稍等',
-        type: 'success'
-      })
+      this.fullscreenLoading = true;
+
       this.ishold = false;
       var sdsssd = [];
       this.$refs.cropper.getCropBlob(data => {
@@ -245,10 +244,12 @@ export default {
                 sdsssd.push(c.toDataURL("image/png", 0.8));
                 console.log(sdsssd[0]);
                 document.getElementById("zpy").src = sdsssd[0];
+                this.fullscreenLoading = false;
               };
             };
             break;
         }
+        this.fullscreenLoading = false;
       });
     },
 
@@ -274,6 +275,7 @@ export default {
     uploadImg(e, num) {
       //上传图片
       if (!this.iswechat) {
+        //非微信处理区
         var file = e.target.files[0];
         console.log(file);
         if (!/\.(gif|jpg|jpeg|png|bmp|JPG|PNG)$/.test(e.target.value)) {
@@ -299,6 +301,7 @@ export default {
         reader.readAsArrayBuffer(file);
       }
       else {
+        //微信处理区
         let _this = this;
         // if (this.wxready == 1)
         wx.chooseImage({
