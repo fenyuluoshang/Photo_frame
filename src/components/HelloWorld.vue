@@ -65,7 +65,7 @@
             type="file"
             id="uploads"
             style="position:absolute; clip:rect(0 0 0 0);"
-            accept="image/png, image/jpeg, image/gif, image/jpg"
+            accept="image/*"
             @change="uploadImg"
             ref="uploadbtn"
           >
